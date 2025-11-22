@@ -1,0 +1,136 @@
+Project Name: CodeVibe – AI Code Review Companion
+
+Goal:
+Build a full-stack web application where developers can paste code snippets or connect their GitHub repositories. The system analyzes code quality, detects potential bugs, suggests refactors, scores the code, and learns the user’s coding style over time. The core focus is 70% full-stack development and 30% ML-based intelligent analysis.
+
+🔹 What the Application Should Do
+
+Users paste code or connect GitHub repos.
+
+The system analyzes the code with:
+
+ML-based bug prediction
+
+code smell detection
+
+complexity scoring
+
+rule-based lint checks
+
+It generates a Code Quality Score (0–100) using:
+
+lint warnings
+
+predicted bug probability
+
+code complexity
+
+Provides AI-powered suggestions, refactors, and explanations.
+
+Tracks user history and displays improvement trends.
+
+Learns user coding preferences over time (naming patterns, indentation style, structure).
+
+Supports multiple languages (start with Python + JavaScript).
+
+Optional: Auto-fix mode that rewrites code in a cleaner style.
+
+Optional: GitHub repo diff/commit analysis with risk detection.
+
+Displays all insights in a dashboard with charts and analytics.
+
+Tech Stack Requirements
+Frontend (React/Next.js):
+
+Build modern UI using React or Next.js
+
+Use Monaco Editor (VS Code editor) for code input
+
+Syntax highlighting for multiple languages
+
+Components:
+
+Code editor
+
+Dashboard
+
+History page
+
+Auth pages
+
+Repo connection page
+
+Charts: Recharts or Chart.js
+
+Backend (FastAPI + Python):
+
+FastAPI to expose REST API endpoints
+
+Handles code submission and analysis
+
+Background workers (FastAPI background tasks or Celery) for heavy ML jobs
+
+GitHub integration (OAuth + API)
+
+Code analysis pipeline:
+
+static analysis
+
+ML predictions
+
+scoring engine
+
+Session management + JWT authentication
+
+Database (PostgreSQL):
+
+Store user profiles
+
+Save code snippets and results
+
+Maintain code history timeline
+
+Store user “coding style preferences”
+
+Tables for:
+
+users
+
+snippets
+
+repo files
+
+analysis results
+
+code smell patterns
+
+Caching Layer (Optional):
+
+Redis for storing recent analysis to speed up repeat requests
+
+🔹 ML + AI Components (30% Focus)
+Models to Use:
+
+CodeBERT / GraphCodeBERT → understanding code semantics
+
+Static Linters: Pylint, ESLint → rule-based checks
+
+Pattern Detection Using Scikit-learn:
+
+detect common code smells
+
+classify risky code blocks
+
+Bug Prediction Model:
+
+train a simple classifier on labeled buggy/clean code datasets
+
+LLM Integration (Optional):
+
+OpenAI API or similar for:
+
+natural language explanations
+
+“auto-refactor” feature
+
+commit-level suggestions

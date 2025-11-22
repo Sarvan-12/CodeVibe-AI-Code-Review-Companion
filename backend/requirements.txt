@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
+pylint
+scikit-learn
+numpy
+pandas
+# torch  # Uncomment if we proceed with local CodeBERT
+# transformers # Uncomment if we proceed with local CodeBERT
