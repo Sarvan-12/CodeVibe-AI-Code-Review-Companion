@@ -3,11 +3,16 @@ uvicorn
 sqlalchemy
 psycopg2-binary
 python-jose[cryptography]
-passlib[bcrypt]
+passlib[argon2]
+argon2-cffi
 python-multipart
 pylint
 scikit-learn
 numpy
 pandas
+python-dotenv
+pydantic-settings
 # torch  # Uncomment if we proceed with local CodeBERT
 # transformers # Uncomment if we proceed with local CodeBERT
+# Note: ESLint must be installed globally via npm: npm install -g eslint
+
