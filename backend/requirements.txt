@@ -12,6 +12,15 @@ numpy
 pandas
 python-dotenv
 pydantic-settings
+
+# ML Dependencies (Lightweight, CPU-only)
+transformers==4.35.0
+torch>=2.0.0
+sentencepiece==0.1.99
+
+# Code Analysis & AST
+tree-sitter==0.20.4
+autopep8==2.0.4
 # torch  # Uncomment if we proceed with local CodeBERT
 # transformers # Uncomment if we proceed with local CodeBERT
 # Note: ESLint must be installed globally via npm: npm install -g eslint
