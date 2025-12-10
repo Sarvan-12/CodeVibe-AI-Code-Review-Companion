@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordRequestForm
 from datetime import timedelta
-from .. import models, schemas, database, auth
+import models, schemas, database, auth
 
 router = APIRouter(
     prefix="/users",
@@ -12,24 +12,28 @@ router = APIRouter(
 
 @router.post("/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)):
-    db_user_email = db.query(models.User).filter(models.User.email == user.email).first()
-    if db_user_email:
-        raise HTTPException(status_code=400, detail="Email already registered")
-    
-    db_user_username = db.query(models.User).filter(models.User.username == user.username).first()
-    if db_user_username:
-        raise HTTPException(status_code=400, detail="Username already taken")
-    
-    hashed_password = auth.get_password_hash(user.password)
-    db_user = models.User(email=user.email, username=user.username, hashed_password=hashed_password)
     try:
+        db_user_email = db.query(models.User).filter(models.User.email == user.email).first()
+        if db_user_email:
+            raise HTTPException(status_code=400, detail="Email already registered")
+        
+        db_user_username = db.query(models.User).filter(models.User.username == user.username).first()
+        if db_user_username:
+            raise HTTPException(status_code=400, detail="Username already taken")
+        
+        hashed_password = auth.get_password_hash(user.password)
+        db_user = models.User(email=user.email, username=user.username, hashed_password=hashed_password)
+        
         db.add(db_user)
         db.commit()
         db.refresh(db_user)
+        return db_user
+    except HTTPException as he:
+        raise he
     except Exception as e:
+        print(f"Error creating user: {e}") # Log to console
         db.rollback()
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
-    return db_user
+        raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
 
 @router.post("/token", response_model=schemas.Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
