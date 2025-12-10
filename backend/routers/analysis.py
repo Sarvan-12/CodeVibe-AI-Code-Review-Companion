@@ -2,6 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 import models, schemas, database, auth
 from analysis import language_analyzer, ml
+from analysis.ml_engine import get_ml_engine
+from services.auto_fixer import get_auto_fixer
+from services.style_learner import get_style_learner
 
 router = APIRouter(
     prefix="/analysis",
@@ -40,10 +43,22 @@ def submit_code(
         analyzer = language_analyzer.get_analyzer(detected_lang)
         static_results = analyzer.analyze(snippet.code_content)
         
-        # 4. Run ML Analysis (still basic for now)
-        bugs = ml.predict_bugs(snippet.code_content)
+        # 4. Run ML Analysis (enhanced with real ML)
+        ml_engine = get_ml_engine()
+        ml_bugs = ml_engine.predict_bugs(snippet.code_content, detected_lang.value)
+        ml_smells = ml_engine.detect_code_smells(snippet.code_content, detected_lang.value)
+        ml_security = ml_engine.scan_security_vulnerabilities(snippet.code_content, detected_lang.value)
         
-        # 5. Calculate Score
+        # 5. Generate Auto-fix Suggestions
+        auto_fixer = get_auto_fixer()
+        fix_suggestions = auto_fixer.analyze_code(snippet.code_content, detected_lang.value)
+        
+        # 6. Learn Style Patterns
+        style_learner = get_style_learner()
+        patterns = style_learner.extract_patterns(snippet.code_content, detected_lang.value)
+        style_learner.update_user_profile(current_user.id, patterns, db)
+        
+        # 7. Calculate Score (weighted by severity)
         base_score = 100.0
         issue_count = len(static_results.issues)
         bug_count = len(bugs)
