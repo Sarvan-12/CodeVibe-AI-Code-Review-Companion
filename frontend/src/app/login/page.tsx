@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { authService } from '@/services/api';
-import { Code2, Mail, Lock, User, ArrowRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 
 export default function LoginPage() {
@@ -29,9 +28,8 @@ export default function LoginPage() {
                 await authService.register(email || `${username}@example.com`, username, password);
                 setIsLogin(true);
                 setError('');
-                // Show success message
                 setTimeout(() => {
-                    setError('Registration successful! Please login.');
+                    setError('Account created successfully. Please sign in.');
                 }, 100);
             }
         } catch (err: any) {
@@ -42,34 +40,25 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
-            {/* Background decoration */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-cyan-500/5" />
-
-            <div className="w-full max-w-md relative">
-                {/* Logo/Brand */}
+        <div className="min-h-screen flex items-center justify-center p-4" style={{ background: '#fafafa' }}>
+            <div className="w-full max-w-sm">
+                {/* Logo */}
                 <Link href="/" className="flex items-center justify-center gap-2 mb-8">
-                    <Code2 className="w-8 h-8 text-blue-500" />
-                    <span className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
-                        CodeVibe
-                    </span>
+                    <div className="w-8 h-8 bg-black rounded-md flex items-center justify-center">
+                        <span className="text-white text-sm font-bold">CV</span>
+                    </div>
+                    <span className="text-xl font-semibold text-neutral-900">CodeVibe</span>
                 </Link>
 
-                {/* Main Card */}
-                <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-8 shadow-2xl">
+                {/* Card */}
+                <div className="bg-white border border-neutral-200 rounded-lg p-8 shadow-sm">
                     {/* Header */}
-                    <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full mb-4">
-                            <Sparkles className="w-4 h-4 text-blue-400" />
-                            <span className="text-sm text-blue-400 font-medium">
-                                {isLogin ? 'Welcome Back' : 'Join CodeVibe'}
-                            </span>
-                        </div>
-                        <h2 className="text-3xl font-bold text-white mb-2">
-                            {isLogin ? 'Sign In' : 'Create Account'}
+                    <div className="mb-6">
+                        <h2 className="text-2xl font-semibold text-neutral-900 mb-1">
+                            {isLogin ? 'Welcome back' : 'Create account'}
                         </h2>
-                        <p className="text-slate-400">
-                            {isLogin ? 'Access your code analysis dashboard' : 'Start analyzing your code today'}
+                        <p className="text-sm text-neutral-500">
+                            {isLogin ? 'Sign in to continue' : 'Get started with CodeVibe'}
                         </p>
                     </div>
 
@@ -77,64 +66,55 @@ export default function LoginPage() {
                     <form onSubmit={handleSubmit} className="space-y-4">
                         {/* Username */}
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                            <label className="block text-sm font-medium text-neutral-700 mb-1.5">
                                 Username
                             </label>
-                            <div className="relative">
-                                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                                <input
-                                    type="text"
-                                    required
-                                    className="w-full pl-10 pr-4 py-3 bg-slate-900/50 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
-                                    placeholder="Enter your username"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                />
-                            </div>
+                            <input
+                                type="text"
+                                required
+                                className="w-full px-3 py-2 bg-white border border-neutral-300 rounded-md text-neutral-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                                placeholder="Enter username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
                         </div>
 
                         {/* Email (Register only) */}
                         {!isLogin && (
                             <div>
-                                <label className="block text-sm font-medium text-slate-300 mb-2">
+                                <label className="block text-sm font-medium text-neutral-700 mb-1.5">
                                     Email
                                 </label>
-                                <div className="relative">
-                                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                                    <input
-                                        type="email"
-                                        className="w-full pl-10 pr-4 py-3 bg-slate-900/50 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
-                                        placeholder="Enter your email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                    />
-                                </div>
+                                <input
+                                    type="email"
+                                    className="w-full px-3 py-2 bg-white border border-neutral-300 rounded-md text-neutral-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                                    placeholder="Enter email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
                             </div>
                         )}
 
                         {/* Password */}
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                            <label className="block text-sm font-medium text-neutral-700 mb-1.5">
                                 Password
                             </label>
-                            <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                                <input
-                                    type="password"
-                                    required
-                                    className="w-full pl-10 pr-4 py-3 bg-slate-900/50 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
-                                    placeholder="Enter your password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                            </div>
+                            <input
+                                type="password"
+                                required
+                                className="w-full px-3 py-2 bg-white border border-neutral-300 rounded-md text-neutral-900 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                                placeholder="Enter password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
                         </div>
 
                         {/* Error Message */}
                         {error && (
-                            <div className={`p-3 rounded-lg text-sm ${error.includes('successful')
-                                    ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400'
-                                    : 'bg-red-500/10 border border-red-500/20 text-red-400'
+                            <div className={`p-3 rounded-md text-sm ${error.includes('successfully')
+                                    ? 'bg-emerald-50 border border-emerald-200 text-emerald-700'
+                                    : 'bg-red-50 border border-red-200 text-red-700'
                                 }`}>
                                 {error}
                             </div>
@@ -144,19 +124,9 @@ export default function LoginPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-blue-500/30 transition-all hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+                            className="w-full py-2.5 px-4 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {loading ? (
-                                <>
-                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                    <span>Processing...</span>
-                                </>
-                            ) : (
-                                <>
-                                    <span>{isLogin ? 'Sign In' : 'Create Account'}</span>
-                                    <ArrowRight className="w-5 h-5" />
-                                </>
-                            )}
+                            {loading ? 'Please wait...' : (isLogin ? 'Sign in' : 'Create account')}
                         </button>
                     </form>
 
@@ -167,27 +137,16 @@ export default function LoginPage() {
                                 setIsLogin(!isLogin);
                                 setError('');
                             }}
-                            className="text-sm text-slate-400 hover:text-blue-400 transition-colors"
+                            className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors"
                         >
                             {isLogin ? (
-                                <>
-                                    Don't have an account?{' '}
-                                    <span className="text-blue-400 font-medium">Sign up</span>
-                                </>
+                                <>Don't have an account? <span className="text-blue-500 font-medium">Sign up</span></>
                             ) : (
-                                <>
-                                    Already have an account?{' '}
-                                    <span className="text-blue-400 font-medium">Sign in</span>
-                                </>
+                                <>Already have an account? <span className="text-blue-500 font-medium">Sign in</span></>
                             )}
                         </button>
                     </div>
                 </div>
-
-                {/* Footer */}
-                <p className="text-center text-sm text-slate-500 mt-6">
-                    By continuing, you agree to our Terms of Service and Privacy Policy
-                </p>
             </div>
         </div>
     );
