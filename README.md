@@ -40,7 +40,7 @@ frontend/  # Next.js UI
 ## Prerequisites
 
 - Node.js (LTS recommended)
-- Python 3.x
+- Python 3.9+
 - npm
 
 ## Environment Setup
@@ -99,5 +99,6 @@ No automated test suite is configured yet.
 
 - SQLite is the default database. Switch to PostgreSQL by updating
   `DATABASE_URL` in `.env`.
-- ESLint must be installed globally if you want JS linting from the backend
-  analysis pipeline (`npm install -g eslint`).
+- The backend JS analysis expects `eslint` to be available on your PATH. You
+  can install it globally (`npm install -g eslint`) or ensure
+  `frontend/node_modules/.bin` is on your PATH when running the backend.
