@@ -39,9 +39,8 @@ frontend/  # Next.js UI
 
 ## Prerequisites
 
-- Node.js (LTS recommended)
+- Node.js 18+ (LTS recommended)
 - Python 3.9+
-- npm
 
 ## Environment Setup
 
@@ -74,7 +73,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000 in your browser.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Linting & Build
 
